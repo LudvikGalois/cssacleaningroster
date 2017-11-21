@@ -1,3 +1,5 @@
+package au.com.arachnomorphism.cssacleaningroster;
+
 import java.util.List;
 
 public class Task extends DomainItem {
@@ -30,4 +32,10 @@ public class Task extends DomainItem {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

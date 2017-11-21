@@ -1,5 +1,6 @@
 (ns findPeople
-  (:import (java.util HashSet))
+  (:import (java.util HashSet)
+           (au.com.arachnomorphism.cssacleaningroster DomainFactory))
   (:require [clojure.data.csv :as csv]
             [clojure.java.io :as io]))
 

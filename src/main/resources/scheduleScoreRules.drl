@@ -1,0 +1,41 @@
+package au.com.arachnomorphism.cssacleaningroster;
+    dialect "java"
+
+import java.time.LocalDate;
+
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScoreHolder;
+
+import au.com.arachnomorphism.cssacleaningroster.Day;
+import au.com.arachnomorphism.cssacleaningroster.Person;
+import au.com.arachnomorphism.cssacleaningroster.ScheduleItem;
+import au.com.arachnomorphism.cssacleaningroster.Task;
+
+global HardSoftScoreHolder scoreHolder;
+
+// We only want to
+rule "allocationPenalty"
+  when
+    $person : Person()
+    accumulate(
+      $item : ScheduleItem($rostered : rostered, $rostered == $person);
+      $itemCount : count($item)
+    )
+  then
+    scoreHolder.addSoftConstraintMatch(kcontext, -($itemCount.intValue() * $itemCount.intValue()));
+end
+
+rule "cantWorkTwice"
+  when
+    ScheduleItem($id : id, $rostered : rostered, $day : day, $rostered != null)
+    ScheduleItem(id > $id, rostered == $rostered, day == $day)
+  then
+    scoreHolder.addHardConstraintMatch(kcontext, -2);
+end
+
+// This also ensures that we're not null
+rule "mustBeQualified"
+  when
+    ScheduleItem(!validAllocation)
+  then
+    scoreHolder.addHardConstraintMatch(kcontext, -10);
+end

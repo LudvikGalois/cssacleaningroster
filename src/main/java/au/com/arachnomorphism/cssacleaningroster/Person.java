@@ -1,3 +1,5 @@
+package au.com.arachnomorphism.cssacleaningroster;
+
 import java.util.Set;
 
 public class Person extends DomainItem {
@@ -25,6 +27,8 @@ public class Person extends DomainItem {
 
     @Override
     public String toString() {
-        return "Person (" + name + ")";
+        return "Person{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

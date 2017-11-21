@@ -1,3 +1,5 @@
+package au.com.arachnomorphism.cssacleaningroster;
+
 public abstract class DomainItem {
     private int id;
 
