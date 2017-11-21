@@ -23,4 +23,19 @@ public class Day extends DomainItem {
                 ", dayOfWeek=" + date.getDayOfWeek() +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Day day = (Day) o;
+
+        return date != null ? date.equals(day.date) : day.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return date != null ? date.hashCode() : 0;
+    }
 }

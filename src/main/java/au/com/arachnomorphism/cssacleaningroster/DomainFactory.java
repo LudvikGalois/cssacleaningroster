@@ -1,6 +1,7 @@
 package au.com.arachnomorphism.cssacleaningroster;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,10 @@ public class DomainFactory {
         person.setId(nextID());
         person.setName(name);
         person.setSkills(skills);
+        person.setGoodDays(new HashSet());
+        person.setBadDays(new HashSet());
+        person.setImpossibleDays(new HashSet());
+        person.setDaysAlreadyWorked(0);
         return person;
     }
 

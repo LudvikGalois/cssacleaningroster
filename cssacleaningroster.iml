@@ -7,10 +7,23 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/clojure" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.optaplanner:optaplanner-core:7.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.kie:kie-api:7.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.uberfire:uberfire-maven-support:1.4.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.kie:kie-internal:7.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.drools:drools-core:7.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.mvel:mvel2:2.3.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.drools:drools-compiler:7.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.22" level="project" />
+    <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.11" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.21.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.10" level="project" />
+    <orderEntry type="library" name="Maven: org.optaplanner:optaplanner:7.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.optaplanner:optaplanner-core:7.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.kie:kie-api:7.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.uberfire:uberfire-maven-support:1.4.0.Final" level="project" />

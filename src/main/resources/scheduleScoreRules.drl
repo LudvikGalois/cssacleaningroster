@@ -12,16 +12,18 @@ import au.com.arachnomorphism.cssacleaningroster.Task;
 
 global HardSoftScoreHolder scoreHolder;
 
-// We only want to
+// We want to fairly distribute as our highest soft constraint
+// Instead of having a tier system, we just multiply this by a large number
 rule "allocationPenalty"
   when
-    $person : Person()
+    $person : Person($daysAlreadyWorked : daysAlreadyWorked)
     accumulate(
       $item : ScheduleItem($rostered : rostered, $rostered == $person);
       $itemCount : count($item)
     )
   then
-    scoreHolder.addSoftConstraintMatch(kcontext, -($itemCount.intValue() * $itemCount.intValue()));
+    scoreHolder.addSoftConstraintMatch(kcontext,
+        -(($itemCount.intValue()+$daysAlreadyWorked) * ($itemCount.intValue()+$daysAlreadyWorked)) * 10);
 end
 
 rule "cantWorkTwice"
@@ -32,10 +34,42 @@ rule "cantWorkTwice"
     scoreHolder.addHardConstraintMatch(kcontext, -2);
 end
 
+// Ideally there should be 7 days before being rostered again
+rule "cantWorkTwiceWithinWeek"
+  when
+    ScheduleItem($id : id, $rostered : rostered, $day : day, $rostered != null)
+    ScheduleItem($id != id, rostered == $rostered,
+        day.getDate().compareTo($day.getDate()) * day.getDate().plusDays(6).compareTo($day.getDate()) <= 0)
+  then
+    scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+
 // This also ensures that we're not null
 rule "mustBeQualified"
   when
     ScheduleItem(!validAllocation)
   then
     scoreHolder.addHardConstraintMatch(kcontext, -10);
+end
+
+rule "goodDayBonus"
+  when
+    ScheduleItem($rostered : rostered, $day : day, $rostered != null, $rostered!.goodDays contains $day)
+  then
+    scoreHolder.addSoftConstraintMatch(kcontext, 2);
+end
+
+// We'd rather not give people days they want, than give them days they don't want
+rule "badDayPenalty"
+  when
+    ScheduleItem($rostered : rostered, $day : day, $rostered != null, $rostered!.badDays contains $day)
+  then
+    scoreHolder.addSoftConstraintMatch(kcontext, -5);
+end
+
+rule "impossibleDayPenalty"
+  when
+    ScheduleItem($rostered : rostered, $day : day, $rostered != null, $rostered!.impossibleDays contains $day)
+  then
+    scoreHolder.addHardConstraintMatch(kcontext, -1);
 end
