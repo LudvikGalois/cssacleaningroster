@@ -13,7 +13,7 @@ import au.com.arachnomorphism.cssacleaningroster.Task;
 global HardSoftScoreHolder scoreHolder;
 
 // We want to fairly distribute as our highest soft constraint
-// Instead of having a tier system, we just multiply this by a large number
+// Instead of having a tier system, we just multiply this by a large enough number
 rule "allocationPenalty"
   when
     $person : Person($daysAlreadyWorked : daysAlreadyWorked)
@@ -35,6 +35,9 @@ rule "cantWorkTwice"
 end
 
 // Ideally there should be 7 days before being rostered again
+// but this is less stringent than now working twice in the same day.
+// It's still a hard constraint, but in the event that the schedule isn't feasible
+// it's still preferable that people only have one job per day
 rule "cantWorkTwiceWithinWeek"
   when
     ScheduleItem($id : id, $rostered : rostered, $day : day, $rostered != null)
@@ -72,4 +75,15 @@ rule "impossibleDayPenalty"
     ScheduleItem($rostered : rostered, $day : day, $rostered != null, $rostered!.impossibleDays contains $day)
   then
     scoreHolder.addHardConstraintMatch(kcontext, -1);
+end
+
+// Bonus for being close to old schedule
+rule "closeToOld"
+  when
+    ScheduleItem($rostered : rostered, rostered != null, $day : day, $job : job)
+    PreviousSchedule( model != null, model[$day] != null, model[$day][$job.name] != null
+                    , model[$day][$job.name] == $rostered.name)
+
+  then
+    scoreHolder.addSoftConstraintMatch(kcontext, 2);
 end

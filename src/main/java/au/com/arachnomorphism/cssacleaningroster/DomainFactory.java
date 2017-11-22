@@ -60,6 +60,7 @@ public class DomainFactory {
         Schedule schedule = new Schedule();
         schedule.setPeople(people);
         schedule.setTasks(tasks);
+        schedule.setPreviousSchedule(new PreviousSchedule());
         return schedule;
     }
 

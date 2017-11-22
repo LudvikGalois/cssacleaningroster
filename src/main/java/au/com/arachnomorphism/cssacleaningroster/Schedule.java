@@ -4,6 +4,7 @@ import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty
 import org.optaplanner.core.api.domain.solution.PlanningScore;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.solution.drools.ProblemFactCollectionProperty;
+import org.optaplanner.core.api.domain.solution.drools.ProblemFactProperty;
 import org.optaplanner.core.api.domain.valuerange.ValueRangeProvider;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 
@@ -14,6 +15,7 @@ public class Schedule {
 
     private List<ScheduleItem> tasks;
     private List<Person> people;
+    private PreviousSchedule previousSchedule;
 
     @PlanningScore
     private HardSoftScore score;
@@ -46,4 +48,14 @@ public class Schedule {
     public void setScore(HardSoftScore score) {
         this.score = score;
     }
+
+    @ProblemFactProperty
+    public PreviousSchedule getPreviousSchedule() {
+        return previousSchedule;
+    }
+
+    public void setPreviousSchedule(PreviousSchedule previousSchedule) {
+        this.previousSchedule = previousSchedule;
+    }
+
 }

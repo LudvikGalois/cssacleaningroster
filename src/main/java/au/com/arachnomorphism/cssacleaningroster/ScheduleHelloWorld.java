@@ -5,6 +5,7 @@ import org.optaplanner.core.api.solver.SolverFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class ScheduleHelloWorld {
@@ -29,7 +30,14 @@ public class ScheduleHelloWorld {
         Day day2 = DomainFactory.createDay(LocalDate.parse("2018-03-08"));
         tasks.add(DomainFactory.createScheduleItem(day, vacuum));
         tasks.add(DomainFactory.createScheduleItem(day2, mop));
+        PreviousSchedule previousSchedule = new PreviousSchedule();
+        HashMap<Day,HashMap<String, String>> model = new HashMap();
+        HashMap<String,String> friday = new HashMap();
+        friday.put("vacuum", "Probie");
+        model.put(day, friday);
+        previousSchedule.setModel(model);
         Schedule schedule = DomainFactory.createSchedule(people, tasks);
+        schedule.setPreviousSchedule(previousSchedule);
 
         for (ScheduleItem x : schedule.getTasks()) {
             System.out.println(x);
